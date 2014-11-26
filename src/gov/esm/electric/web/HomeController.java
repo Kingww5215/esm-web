@@ -1,5 +1,8 @@
 package gov.esm.electric.web;
 
+import gov.esm.electric.service.UserService;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class HomeController {
+	@Resource
+	UserService userService;
+
 	/**
 	 * 显示登录界面
 	 * 
