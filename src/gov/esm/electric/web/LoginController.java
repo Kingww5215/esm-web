@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @date 2014年11月26日
  */
 @Controller
-public class HomeController {
+public class LoginController {
 	@Resource
 	UserService userService;
 
