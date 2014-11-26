@@ -1,3 +1,3 @@
 esm
 ===
-exeercise project
+exercise project
