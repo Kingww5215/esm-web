@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class CableLine implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
 	private int id;
 
 	private String code;
