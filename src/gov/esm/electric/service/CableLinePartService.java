@@ -13,12 +13,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Service;
 
 /**
  * 
  * @author XueLiang
  * @date 2014年11月27日
  */
+@Service
 public class CableLinePartService {
 	@Resource
 	private JdbcTemplate jdbcTemplate;
