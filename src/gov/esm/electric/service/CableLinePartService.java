@@ -14,6 +14,8 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
@@ -28,6 +30,7 @@ public class CableLinePartService {
 
 	private static final String sql_insert = "insert into cable_line_part(code,name,status) values (?,?,?)";
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public void insert(CableLinePart entity) {
 		PreparedStatementCreator creator = SpringJdbcAssistor
 				.getPreparedStatementCreator(sql_insert, entity.getCode(),
@@ -39,6 +42,7 @@ public class CableLinePartService {
 
 	private static final String sql_update = "update cable_line_part set code=?,name=?,status=? where id=?";
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public int update(CableLinePart entity) {
 		return this.jdbcTemplate.update(sql_update, entity.getCode(),
 				entity.getName(), entity.getStatus(), entity.getId());
@@ -46,6 +50,7 @@ public class CableLinePartService {
 
 	private static final String sql_updateStatus = "update cable_line_part set status=? where id in (?)";
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public int updateStatus(int status, int[] ids) {
 		String numbers = StringAssistor.join(ids, ",");
 		return this.jdbcTemplate.update(sql_updateStatus, numbers);
@@ -53,6 +58,7 @@ public class CableLinePartService {
 
 	private static final String sql_getCableLineParts = "select id,code,name,status from cable_line_part where  code=?";
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<CableLinePart> getCableLinePartsByCode(String code) {
 		return this.jdbcTemplate.query(sql_getCableLineParts, rowMapper, code);
 	}

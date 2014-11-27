@@ -13,6 +13,8 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
@@ -28,6 +30,7 @@ public class CableLineService {
 
 	private static final String sql_insert = "inert into cable_line(code,name,parentId,status)values(?,?,?,?)";
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public void insert(CableLine entity) {
 		PreparedStatementCreator creator = SpringJdbcAssistor
 				.getPreparedStatementCreator(sql_insert, entity.getCode(),
@@ -40,6 +43,7 @@ public class CableLineService {
 
 	private static final String sql_update = "update cable_line set code=?,name=?,parentId=?,status =? where id=? ";
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public int update(CableLine entity) {
 		return this.jdbcTemplate.update(sql_update, entity.getCode(),
 				entity.getName(), entity.getParentId(), entity.getStatus(),
@@ -48,6 +52,7 @@ public class CableLineService {
 
 	private static final String sql_getCableLine = "select id,code,name,parentId,status from cable_line where id=?";
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public CableLine getCableLine(int id) {
 		return this.jdbcTemplate
 				.queryForObject(sql_getCableLine, rowMapper, id);
@@ -55,6 +60,7 @@ public class CableLineService {
 
 	private static final String sql_getCableLines = "select  id,code,name,parentId,status from cable_line order by id desc limit ?,?";
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<CableLine> getCableLines(int index, int size) {
 		return this.jdbcTemplate.query(sql_getCableLines, rowMapper,
 				(index - 1) * size, size);

@@ -13,6 +13,8 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
@@ -30,6 +32,7 @@ public class AddressService {
 
 	private static final String sql_insert = "insert into address(name)value(?)";
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public void insert(Address entity) {
 		PreparedStatementCreator creator = SpringJdbcAssistor
 				.getPreparedStatementCreator(sql_insert, entity.getAddress());
@@ -40,12 +43,14 @@ public class AddressService {
 
 	private static final String sql_getAddress = "select id,name from address where id=?";
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public Address getAddress(int id) {
 		return this.jdbcTemplate.queryForObject(sql_getAddress, rowMapper, id);
 	}
 
 	private static final String sql_getAddresses = "select id,name, from address limit ?,?";
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<Address> getAddresses(int index, int size) {
 		return this.jdbcTemplate.query(sql_getAddresses, rowMapper, (index - 1)
 				* size, size);

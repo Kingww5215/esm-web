@@ -13,6 +13,8 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
@@ -29,6 +31,7 @@ public class UserService {
 
 	private static final String sql_insert = "insert into user(name,password,email,phone,realName,statusId)values(?,?,?,?,?,?)";
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public void insert(User entity) {
 		PreparedStatementCreator creator = SpringJdbcAssistor
 				.getPreparedStatementCreator(sql_insert, entity.getName(),
@@ -42,6 +45,7 @@ public class UserService {
 
 	public static final String sql_getUser = "select id,name,password,email,phone,realName,statusId from user where name=? and password=md5(?)";
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public User getUser(String name, String password) {
 		return this.jdbcTemplate.queryForObject(sql_getUser, rowMapper, name,
 				password);
@@ -49,6 +53,7 @@ public class UserService {
 
 	private static final String sql_getUsers = "id,name,password,email,phone,realName,statusId from user order by id desc limit ?,? ";
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<User> getUsers(int index, int size) {
 		return this.jdbcTemplate.query(sql_getUsers, rowMapper, (index - 1)
 				* size, size);

@@ -11,6 +11,8 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
@@ -26,6 +28,7 @@ public class CableSwitchService {
 
 	private static final String sql_insert = "insert into cable_switch(code,name,properties,status) values (?,?,?,?)";
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public void insert(CableSwitch entity) {
 		PreparedStatementCreator creator = SpringJdbcAssistor
 				.getPreparedStatementCreator(sql_insert, entity.getCode(),
@@ -38,6 +41,7 @@ public class CableSwitchService {
 
 	private static final String sql_getCableSwitch = "select id,code,name,properties,status from cable_switch where id=?";
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public CableSwitch getCableSwitch(int id) {
 		return this.jdbcTemplate.queryForObject(sql_getCableSwitch, rowMapper,
 				id);
