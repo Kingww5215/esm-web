@@ -35,4 +35,11 @@ public class CableSwitchService {
 		this.jdbcTemplate.update(creator, holder);
 		entity.setId(holder.getKey().intValue());
 	}
+
+	private static final String sql_getCableSwitch = "select id,code,name,properties,status from cable_switch where id=?";
+
+	public CableSwitch getCableSwitch(int id) {
+		return this.jdbcTemplate.queryForObject(sql_getCableSwitch, rowMapper,
+				id);
+	}
 }
