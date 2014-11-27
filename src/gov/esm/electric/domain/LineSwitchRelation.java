@@ -5,29 +5,29 @@ import java.io.Serializable;
 public class LineSwitchRelation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private int int_;
+	private int id;
 
-	private int lineId;
+	private int linePartId;
 
 	private int switchId;
 
 	public LineSwitchRelation() {
 	}
 
-	public int getInt_() {
-		return this.int_;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setInt_(int int_) {
-		this.int_ = int_;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public int getLineId() {
-		return this.lineId;
+	public int getLinePartId() {
+		return this.linePartId;
 	}
 
-	public void setLineId(int lineId) {
-		this.lineId = lineId;
+	public void linePartId(int linePartId) {
+		this.linePartId = linePartId;
 	}
 
 	public int getSwitchId() {

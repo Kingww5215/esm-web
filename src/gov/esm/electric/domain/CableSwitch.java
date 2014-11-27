@@ -2,6 +2,12 @@ package gov.esm.electric.domain;
 
 import java.io.Serializable;
 
+/**
+ * 表示一个开关
+ * 
+ * @author XueLiang
+ * @date 2014年11月27日
+ */
 public class CableSwitch implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -57,5 +63,4 @@ public class CableSwitch implements Serializable {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-
 }
