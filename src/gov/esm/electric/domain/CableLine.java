@@ -2,6 +2,12 @@ package gov.esm.electric.domain;
 
 import java.io.Serializable;
 
+/**
+ * 表示一条完整线路
+ * 
+ * @author XueLiang
+ * @date 2014年11月27日
+ */
 public class CableLine implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -12,8 +18,6 @@ public class CableLine implements Serializable {
 	private String name;
 
 	private int parentId;
-
-	private String properties;
 
 	private int status;
 
@@ -50,14 +54,6 @@ public class CableLine implements Serializable {
 
 	public void setParentId(int parentId) {
 		this.parentId = parentId;
-	}
-
-	public String getProperties() {
-		return this.properties;
-	}
-
-	public void setProperties(String properties) {
-		this.properties = properties;
 	}
 
 	public int getStatus() {
