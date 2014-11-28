@@ -26,7 +26,7 @@ public class CableLineService {
 	@Resource
 	private JdbcTemplate jdbcTemplate;
 
-	private static final RowMapper<CableLine> rowMapper = new BeanPropertyRowMapper<CableLine>();
+	private static final RowMapper<CableLine> rowMapper = new BeanPropertyRowMapper<CableLine>(CableLine.class);
 
 	private static final String sql_insert = "inert into cable_line(code,name,parentId,status)values(?,?,?,?)";
 

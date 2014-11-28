@@ -24,7 +24,7 @@ public class CableSwitchService {
 
 	@Resource
 	private JdbcTemplate jdbcTemplate;
-	private static final RowMapper<CableSwitch> rowMapper = new BeanPropertyRowMapper<CableSwitch>();
+	private static final RowMapper<CableSwitch> rowMapper = new BeanPropertyRowMapper<CableSwitch>(CableSwitch.class);
 
 	private static final String sql_insert = "insert into cable_switch(code,name,properties,status) values (?,?,?,?)";
 

@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CableLinePartService {
 	@Resource
 	private JdbcTemplate jdbcTemplate;
-	private static final RowMapper<CableLinePart> rowMapper = new BeanPropertyRowMapper<CableLinePart>();
+	private static final RowMapper<CableLinePart> rowMapper = new BeanPropertyRowMapper<CableLinePart>(CableLinePart.class);
 
 	private static final String sql_insert = "insert into cable_line_part(code,name,status) values (?,?,?)";
 
