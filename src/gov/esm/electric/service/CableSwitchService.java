@@ -39,6 +39,22 @@ public class CableSwitchService {
 		entity.setId(holder.getKey().intValue());
 	}
 
+	private static final String sql_update = "update cable_switch set code=?,name=?,properties=?,status=? where id=?";
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public int update(CableSwitch entity) {
+		return this.jdbcTemplate.update(sql_update, entity.getCode(),
+				entity.getName(), entity.getProperties(), entity.getStatus(),
+				entity.getId());
+	}
+
+	private static final String sql_updateStatus = "update cable_switch set status=? where id=?";
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public int updateStatus(int status, int id) {
+		return this.jdbcTemplate.update(sql_updateStatus, status, id);
+	}
+
 	private static final String sql_getCableSwitch = "select id,code,name,properties,status from cable_switch where id=?";
 
 	@Transactional(propagation = Propagation.SUPPORTS)

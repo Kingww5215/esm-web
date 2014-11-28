@@ -3,7 +3,6 @@ package gov.esm.electric.domain;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-
 public class InterruptHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -11,7 +10,7 @@ public class InterruptHistory implements Serializable {
 
 	private Timestamp interruptTime;
 
-	private int lineId;
+	private int linePartId;
 
 	private int operater;
 
@@ -36,14 +35,6 @@ public class InterruptHistory implements Serializable {
 		this.interruptTime = interruptTime;
 	}
 
-	public int getLineId() {
-		return this.lineId;
-	}
-
-	public void setLineId(int lineId) {
-		this.lineId = lineId;
-	}
-
 	public int getOperater() {
 		return this.operater;
 	}
@@ -58,6 +49,14 @@ public class InterruptHistory implements Serializable {
 
 	public void setSwitchId(int switchId) {
 		this.switchId = switchId;
+	}
+
+	public int getLinePartId() {
+		return linePartId;
+	}
+
+	public void setLinePartId(int linePartId) {
+		this.linePartId = linePartId;
 	}
 
 }
