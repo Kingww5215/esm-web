@@ -1,1 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+	<!-- 数据源 -->
+	<bean id="esmDataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
+		<constructor-arg>
+			<bean class="org.apache.tomcat.jdbc.pool.PoolProperties">
+				<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://127.0.0.1:3306/esm" />
+				<property name="username" value="esm" />
+				<property name="password" value="xueliang" />
+				<property name="removeAbandoned" value="true" />
+				<property name="initialSize" value="32" />
+				<property name="maxActive" value="20" />
+				<property name="maxIdle" value="20" />
+				<property name="minIdle" value="5" />
+				<property name="validationQuery" value="select 1" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<!-- 事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="esmDataSource" />
+	</bean>
+
+	<!-- spring 注解事务管理器 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- 注入 jdbcTemplat -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="esmDataSource"></property>
+		<property name="queryTimeout" value="5000"></property>
+	</bean>
+</beans>
