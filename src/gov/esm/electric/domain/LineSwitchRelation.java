@@ -11,9 +11,6 @@ public class LineSwitchRelation implements Serializable {
 
 	private int switchId;
 
-	public LineSwitchRelation() {
-	}
-
 	public int getId() {
 		return this.id;
 	}
