@@ -56,4 +56,5 @@ public class RoleService {
 		}
 		return this.jdbcTemplate.query(sql.toString(), rowMapper);
 	}
+
 }

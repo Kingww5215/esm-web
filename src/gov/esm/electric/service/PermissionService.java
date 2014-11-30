@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 public class PermissionService {
 	@Resource
 	private JdbcTemplate jdbcTemplate;
-	private static final RowMapper<Permission> rowMapper = new BeanPropertyRowMapper<Permission>(
+	static final RowMapper<Permission> rowMapper = new BeanPropertyRowMapper<Permission>(
 			Permission.class);
 
 	private static final String sql_insert = "insert into permission(name,url,description)values(?,?,?)";
