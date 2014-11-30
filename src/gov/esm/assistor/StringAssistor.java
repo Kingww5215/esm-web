@@ -28,7 +28,7 @@ public class StringAssistor {
 		int i = 0;
 		while (it.hasNext()) {
 			T t = it.next();
-			cup.append(t == null ? empty : it.next().toString());
+			cup.append(t == null ? empty : t.toString());
 			if (++i < c.size()) {
 				cup.append(separator);
 			}
