@@ -17,7 +17,10 @@
 	<context:component-scan base-package="gov.esm.electric" />
 	<!-- 视图解析 开始 -->
 	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver"></bean>
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp" />
+		<property name="suffix" value=".jsp" />
+	</bean>
 	<!-- 视图解析 结束 -->
-	<import resource="classpath*:spring-jdbc.xml"/>
+	<import resource="classpath*:spring-jdbc.xml" />
 </beans>
