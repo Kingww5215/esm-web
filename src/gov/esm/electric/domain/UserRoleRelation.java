@@ -7,7 +7,7 @@ public class UserRoleRelation implements Serializable {
 
 	private int id;
 
-	private String roleId;
+	private int roleId;
 
 	private int userId;
 
@@ -22,11 +22,11 @@ public class UserRoleRelation implements Serializable {
 		this.id = id;
 	}
 
-	public String getRoleId() {
+	public int getRoleId() {
 		return this.roleId;
 	}
 
-	public void setRoleId(String roleId) {
+	public void setRoleId(int roleId) {
 		this.roleId = roleId;
 	}
 
