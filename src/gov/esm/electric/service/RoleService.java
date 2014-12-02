@@ -25,7 +25,7 @@ public class RoleService {
 	@Resource
 	private JdbcTemplate jdbcTemplate;
 
-	private static final RowMapper<Role> rowMapper = new BeanPropertyRowMapper<Role>(
+	static final RowMapper<Role> rowMapper = new BeanPropertyRowMapper<Role>(
 			Role.class);
 
 	private static final String sql_insert = "insert into role (name)values(?)";
