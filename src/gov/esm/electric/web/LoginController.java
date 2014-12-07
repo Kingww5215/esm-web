@@ -47,12 +47,12 @@ public class LoginController {
 	public Object login(HttpServletRequest req, HttpServletResponse resp) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		String userName = req.getParameter("userName");
-		String password = req.getParameter("password;");
+		String password = req.getParameter("password");
 		User user = this.userService.getUser(userName, password);
 		if (user != null) {
 			req.getSession().setAttribute("user", user);
 		}
-		map.put("logined", user == null);
+		map.put("logined", user != null);
 		return map;
 	}
 

@@ -1,5 +1,2 @@
-var esm = new Object();
-/**
- * commons ui
- */
-
+var esm = esm == null ? new Object() : esm;
+esm.common = new Object();

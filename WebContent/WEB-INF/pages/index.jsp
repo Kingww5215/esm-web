@@ -20,9 +20,9 @@
 	<!-- 头部结束 -->
 
 	<!-- 左侧功能菜单 开始 -->
-	<div data-options="region:'west',split:true,title:'功能菜单'"
-		style="width: 15%; padding: 10px;">
-		<div class="easyui-panel" data-options="split:true,border:false" style="padding: 5px">
+	<div data-options="region:'west',split:true,title:'功能菜单',"
+		style="width: 30%; padding: 10px;">
+		<div class="easyui-panel" data-options="split:true,border:false" style="padding: 5px;width:100%">
 			<ul class="easyui-tree"
 				data-options="url:'/tree_data1.json',method:'get',animate:true,lines:true"></ul>
 		</div>
