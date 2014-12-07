@@ -1,6 +1,10 @@
 package gov.esm.electric.web;
 
+import gov.esm.electric.domain.User;
 import gov.esm.electric.service.UserService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 
@@ -38,8 +43,28 @@ public class LoginController {
 	 * @return
 	 */
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public String login(HttpServletRequest req, HttpServletResponse resp) {
-		return "/electric/diagram";
+	@ResponseBody
+	public Object login(HttpServletRequest req, HttpServletResponse resp) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		String userName = req.getParameter("userName");
+		String password = req.getParameter("password;");
+		User user = this.userService.getUser(userName, password);
+		if (user != null) {
+			req.getSession().setAttribute("user", user);
+		}
+		map.put("logined", user == null);
+		return map;
+	}
+
+	/**
+	 * 
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
+	@RequestMapping(value = "/logout.do", method = RequestMethod.POST)
+	public String logout(HttpServletRequest req, HttpServletResponse resp) {
+		return "redirect:/login";
 	}
 
 }

@@ -47,8 +47,9 @@ public class UserService {
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public User getUser(String name, String password) {
-		return this.jdbcTemplate.queryForObject(sql_getUser, rowMapper, name,
-				password);
+		List<User> users = this.jdbcTemplate.query(sql_getUser, rowMapper,
+				name, password);
+		return users == null ? null : (users.size() > 0 ? users.get(0) : null);
 	}
 
 	private static final String sql_getUsers = "id,name,password,email,phone,realName,statusId from user order by id desc limit ?,? ";
