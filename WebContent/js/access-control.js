@@ -13,6 +13,8 @@ esm.login = function() {
 		success : function(data, status, xhr) {
 			if (data.logined) {
 				window.location = '/index.do';
+			} else {
+				jQuery.messager.alert('登录失败', '用户名或密码错误。', 'info');
 			}
 		},
 		error : function() {
