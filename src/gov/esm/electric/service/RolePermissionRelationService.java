@@ -4,7 +4,9 @@ import gov.esm.assistor.SpringJdbcAssistor;
 import gov.esm.electric.domain.Permission;
 import gov.esm.electric.domain.RolePermissionRelation;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -55,5 +57,17 @@ public class RolePermissionRelationService {
 	public List<Permission> getPermissionsByRoleId(int roleId) {
 		return this.jdbcTemplate.query(sql_getPermissionsByRoleId,
 				PermissionService.rowMapper, roleId);
+	}
+
+	public Set<Permission> getPermissions(List<Integer> roleIds) {
+		Set<Permission> set = new HashSet<Permission>();
+		if (roleIds != null && roleIds.size() > 0) {
+			for (Integer roleId : roleIds) {
+				List<Permission> permissions = this
+						.getPermissionsByRoleId(roleId);
+				set.addAll(permissions);
+			}
+		}
+		return set;
 	}
 }

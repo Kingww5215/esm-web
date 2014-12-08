@@ -45,11 +45,17 @@ public class PermissionService {
 				entity.getUrl(), entity.getDescription(), entity.getId());
 	}
 
-	private static final String sql_getPermissions = "select id,name,url,description from permission where id in(?)";
+	private static final String sql_getPermissions = "select id,name,url,description,leaderId from permission ";
 
 	public List<Permission> getPermissions(List<Integer> ids) {
-		String in = StringAssistor.join(ids, ",");
-		return this.jdbcTemplate.query(sql_getPermissions, rowMapper, in);
+		if (ids != null && ids.size() > 0) {
+			StringBuilder sql = new StringBuilder(128);
+			sql.append(sql_getPermissions);
+			String in = StringAssistor.join(ids, ",");
+			sql.append(" where id in(").append(in).append(")");
+			return this.jdbcTemplate.query(sql.toString(), rowMapper, in);
+		} else {
+			return this.jdbcTemplate.query(sql_getPermissions, rowMapper);
+		}
 	}
-
 }

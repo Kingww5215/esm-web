@@ -48,4 +48,16 @@ public class Permission implements Serializable {
 		this.description = description;
 	}
 
+	@Override
+	public int hashCode() {
+		return this.id;
+	}
+
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return Boolean.FALSE.booleanValue();
+		}
+		Permission permission = (Permission) obj;
+		return this.id == permission.getId();
+	}
 }

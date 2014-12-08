@@ -76,8 +76,16 @@ public class StringAssistor {
 		return true;
 	}
 
+	public static boolean isNotNumeric(CharSequence cs) {
+		return !isNumeric(cs);
+	}
+
 	public static boolean isEmpty(CharSequence cs) {
 		return ((cs == null) || (cs.length() == 0));
+	}
+
+	public static boolean isNotEmpty(CharSequence cs) {
+		return !isEmpty(cs);
 	}
 
 	public static boolean isBlank(CharSequence cs) {
@@ -90,6 +98,10 @@ public class StringAssistor {
 			}
 		}
 		return true;
+	}
+
+	public static boolean isNotBlank(CharSequence cs) {
+		return !isBlank(cs);
 	}
 
 	public static int toInteger(String input) {

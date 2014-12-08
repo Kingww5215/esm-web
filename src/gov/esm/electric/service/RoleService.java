@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -38,23 +39,32 @@ public class RoleService {
 		entity.setId(holder.getKey().intValue());
 	}
 
+	private static final String sql_update = "update role set name=? where id=?";
+
+	public int update(Role entity) {
+		return this.jdbcTemplate.update(sql_update, entity.getName(),
+				entity.getId());
+	}
+
 	private static final String sql_getRole = "select id,name from role where id=?";
 
 	public Role getRole(int id) {
-		return this.jdbcTemplate.queryForObject(sql_getRole, rowMapper, id);
+		List<Role> lst = this.jdbcTemplate.query(sql_getRole, rowMapper, id);
+		return DataAccessUtils.singleResult(lst);
 	}
 
 	private static final String sql_getRoles = "select id,name from role ";
 
 	public List<Role> getRoles(List<Integer> ids) {
-		StringBuilder sql = new StringBuilder(64);
-		sql.append(sql_getRoles);
+		StringBuilder sql = null;
 		if (ids != null && ids.size() > 0) {
+			sql = new StringBuilder(64);
+			sql.append(sql_getRoles);
 			sql.append(" where id in(");
 			String in = StringAssistor.join(ids, ",");
 			sql.append(in).append(")");
 		}
-		return this.jdbcTemplate.query(sql.toString(), rowMapper);
+		return this.jdbcTemplate.query(
+				sql == null ? sql_getRoles : sql.toString(), rowMapper);
 	}
-
 }
