@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -72,23 +71,24 @@ public class LoginController {
 		User user = this.userService.getUser(userName, password);
 		if (user != null) {
 			// setp 1.用户
-			req.getSession().setAttribute("user", user);
+			req.getSession().setAttribute(Constant.SESSION_KEY_USER, user);
 
 			// setp 2.获得用户权限集合
 
 			// step 2.1.得到用户的角色id集合
 			List<Role> roles = userRoleRelationService.getRolesByUserId(user
 					.getId());
-			req.getSession().setAttribute("roles", roles);
+			req.getSession().setAttribute(Constant.SESSION_KEY_ROLES, roles);
 			List<Integer> roleIds = new LinkedList<Integer>();
 			for (Role role : roles) {
 				roleIds.add(role.getId());
 			}
 
 			// step 2.2.得到该用户的所有权限
-			Set<Permission> permissions = rolePermissionRelationService
+			Map<String, Permission> permissions = rolePermissionRelationService
 					.getPermissions(roleIds);
-			req.getSession().setAttribute("permissions", permissions);
+			req.getSession().setAttribute(Constant.SESSION_KEY_PERMISSIONS,
+					permissions);
 		}
 		map.put("logined", user != null);
 		return map;

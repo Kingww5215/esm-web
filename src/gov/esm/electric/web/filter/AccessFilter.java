@@ -1,6 +1,11 @@
 package gov.esm.electric.web.filter;
 
+import gov.esm.electric.domain.Permission;
+import gov.esm.electric.web.Constant;
+
 import java.io.IOException;
+import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -19,6 +24,8 @@ import javax.servlet.http.HttpSession;
  */
 public class AccessFilter implements Filter {
 
+	private static final Logger logger = Logger.getLogger("web");
+
 	@Override
 	public void init(FilterConfig fc) throws ServletException {
 
@@ -33,6 +40,21 @@ public class AccessFilter implements Filter {
 			Object user = session.getAttribute("user");
 			if (user == null) {
 				request.getRequestDispatcher("/login.do").forward(req, resp);
+			} else {
+				@SuppressWarnings("unchecked")
+				Map<String, Permission> permissions = (Map<String, Permission>) session
+						.getAttribute(Constant.SESSION_KEY_PERMISSIONS);
+				if (permissions == null || permissions.size() < 1) {
+					request.getRequestDispatcher("/login.do")
+							.forward(req, resp);
+					return;
+				}
+				String path = request.getServletContext().getContextPath();
+				logger.info("context path is :" + path);
+				Permission permission = permissions.get(path);
+				if (permission == null) {
+					logger.info("you not have permission :" + path);
+				}
 			}
 		} else {
 			request.getRequestDispatcher("/login.do").forward(req, resp);
