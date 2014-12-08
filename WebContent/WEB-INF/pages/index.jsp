@@ -4,34 +4,38 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Full Layout - jQuery EasyUI Demo</title>
+<title>XXXX-ZZZ</title>
 <link rel="stylesheet" type="text/css"
 	href="/ui/themes/black/easyui.css">
 <link rel="stylesheet" type="text/css" href="/ui/themes/icon.css">
 <script type="text/javascript" src="/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/ui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+
 </head>
 <body class="easyui-layout">
 	<!-- 头部 开始 -->
 	<div data-options="region:'north',border:false,split:true"
 		style="height: 80px; background: #666; padding: 10px">
-		<h1>包头供电局 －ＸＸＸ 系统</h1>
+		<h1>ＸＸＸ</h1>
 	</div>
 	<!-- 头部结束 -->
 
 	<!-- 左侧功能菜单 开始 -->
 	<div data-options="region:'west',split:true,title:'功能菜单',"
 		style="width: 30%; padding: 10px;">
-		<div class="easyui-panel" data-options="split:true,border:false" style="padding: 5px;width:100%">
-			<ul class="easyui-tree"
-				data-options="url:'/tree_data1.json',method:'get',animate:true,lines:true"></ul>
+		<div class="easyui-panel" data-options="split:true,border:false"
+			style="padding: 5px; width: 100%">
+			<ul id="tree-menu" class="easyui-tree"
+				data-options="animate:true,lines:true"></ul>
 		</div>
 	</div>
 	<!-- 　左侧功能菜单 结束 -->
 
 	<!-- 工作区 开始 -->
 	<div data-options="region:'center',title:''">
-		<div class="easyui-tabs" data-options="split:true,border:false"
+		<div id="workArea" class="easyui-tabs"
+			data-options="split:true,border:false"
 			style="width: 100%; height: 100%;">
 			<div title="系统说明" data-options="iconCls:'icon-help',closable:true"
 				style="padding: 5px;">
