@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping(value = "/settings")
-public class RoleContrllor {
+public class RoleController {
 
 	private static final Logger logger = Logger.getLogger("web");
 

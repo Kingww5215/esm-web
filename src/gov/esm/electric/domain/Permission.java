@@ -15,6 +15,8 @@ public class Permission implements Serializable {
 
 	private int leaderId;
 
+	private int seq;
+
 	public Permission() {
 	}
 
@@ -69,5 +71,13 @@ public class Permission implements Serializable {
 
 	public void setLeaderId(int leaderId) {
 		this.leaderId = leaderId;
+	}
+
+	public int getSeq() {
+		return seq;
+	}
+
+	public void setSeq(int seq) {
+		this.seq = seq;
 	}
 }
