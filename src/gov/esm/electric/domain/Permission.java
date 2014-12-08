@@ -13,6 +13,8 @@ public class Permission implements Serializable {
 
 	private String description;
 
+	private int leaderId;
+
 	public Permission() {
 	}
 
@@ -59,5 +61,13 @@ public class Permission implements Serializable {
 		}
 		Permission permission = (Permission) obj;
 		return this.id == permission.getId();
+	}
+
+	public int getLeaderId() {
+		return leaderId;
+	}
+
+	public void setLeaderId(int leaderId) {
+		this.leaderId = leaderId;
 	}
 }

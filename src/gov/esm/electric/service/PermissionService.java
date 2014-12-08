@@ -27,7 +27,7 @@ public class PermissionService {
 	static final RowMapper<Permission> rowMapper = new BeanPropertyRowMapper<Permission>(
 			Permission.class);
 
-	private static final String sql_insert = "insert into permission(name,url,description)values(?,?,?)";
+	private static final String sql_insert = "insert into permission(name,url,description,leaderId)values(?,?,?,?)";
 
 	public void insert(Permission entity) {
 		PreparedStatementCreator creator = SpringJdbcAssistor
@@ -38,11 +38,12 @@ public class PermissionService {
 		entity.setId(holder.getKey().intValue());
 	}
 
-	private static final String sql_update = "update permission set name=?,url=?,description where id=?";
+	private static final String sql_update = "update permission set name=?,url=?,description=?,leaderId=? where id=?";
 
 	public int update(Permission entity) {
 		return this.jdbcTemplate.update(sql_update, entity.getName(),
-				entity.getUrl(), entity.getDescription(), entity.getId());
+				entity.getUrl(), entity.getDescription(), entity.getLeaderId(),
+				entity.getId());
 	}
 
 	private static final String sql_getPermissions = "select id,name,url,description,leaderId from permission ";
