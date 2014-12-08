@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="/ui/themes/icon.css">
 <script type="text/javascript" src="/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/ui/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="/js/login.js"></script>
+<script type="text/javascript" src="/js/access-control.js"></script>
 </head>
 <body>
 	<div id="dlg" class="easyui-dialog" title="包头供电局－ＸＸ系统"
