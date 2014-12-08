@@ -9,11 +9,11 @@
 				"children":[
 						{
 							"id":111,
-							"text":"<a href=\"javascript:return;\">添加线路</a>"
+							"text":"<a href=\"javascript:esm.common.tab.create('编辑线路','/line/edit.do');\">编辑线路</a>"
 						},
 						{
 							"id":112,
-							"text":"<a href=\"javascript:return;\">添加开关</a>"
+							"text":"<a href=\"javascript:esm.common.tab.create('查看线路','/line/view.do');\">查看线路</a>"
 						}]
 			},
 
