@@ -1,9 +1,3 @@
-/**
- *
- * 
- * @author Administrator
- * @date 2014年12月8日
- */
 package gov.esm.electric.web.settings;
 
 import gov.esm.assistor.StringAssistor;
