@@ -10,8 +10,13 @@
 <link rel="stylesheet" type="text/css" href="/ui/themes/icon.css">
 <script type="text/javascript" src="/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/ui/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="/js/common.js"></script>
-
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript">
+	window.onload = function() {
+		//初始化功能菜单
+		esm.index.menu.init();
+	};
+</script>
 </head>
 <body class="easyui-layout">
 	<!-- 头部 开始 -->
@@ -27,7 +32,9 @@
 		<div class="easyui-panel" data-options="split:true,border:false"
 			style="padding: 5px; width: 100%">
 			<ul id="tree-menu" class="easyui-tree"
-				data-options="animate:true,lines:true"></ul>
+				data-options="animate:true,lines:true">
+
+			</ul>
 		</div>
 	</div>
 	<!-- 　左侧功能菜单 结束 -->

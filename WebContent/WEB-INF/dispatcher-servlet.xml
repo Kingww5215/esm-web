@@ -22,5 +22,5 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	<!-- 视图解析 结束 -->
-	<import resource="classpath*:spring-jdbc.xml" />
+	<import resource="classpath*:spring-*.xml" />
 </beans>
