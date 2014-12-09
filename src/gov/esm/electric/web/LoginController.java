@@ -17,6 +17,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,6 +67,7 @@ public class LoginController {
 	@ResponseBody
 	public Object login(HttpServletRequest req, HttpServletResponse resp) {
 		Map<String, Object> map = new HashMap<String, Object>();
+
 		String userName = req.getParameter("userName");
 		String password = req.getParameter("password");
 		User user = this.userService.getUser(userName, password);
@@ -85,10 +87,17 @@ public class LoginController {
 			}
 
 			// step 2.2.得到该用户的所有权限
-			Map<String, Permission> permissions = rolePermissionRelationService
+			List<Permission> permissions = rolePermissionRelationService
 					.getPermissions(roleIds);
+
+			List<Map<String, Object>> trees = new LinkedList<Map<String, Object>>();
+			for (Permission p : permissions) {
+				buildTree(p, permissions, trees);
+			}
 			req.getSession().setAttribute(Constant.SESSION_KEY_PERMISSIONS,
 					permissions);
+			req.getSession()
+					.setAttribute(Constant.SESSION_KEY_MENU_TREE, trees);
 		}
 		map.put("logined", user != null);
 		return map;
@@ -105,4 +114,50 @@ public class LoginController {
 		return "redirect:/login";
 	}
 
+	@RequestMapping(value = "/getPermissions.do")
+	@ResponseBody
+	public Object getPermissions(HttpServletRequest req,
+			HttpServletResponse resp) {
+		HttpSession session = req.getSession();
+		Object permissions = session
+				.getAttribute(Constant.SESSION_KEY_MENU_TREE);
+		return permissions;
+	}
+
+	private void buildTree(Permission node, List<Permission> permissions,
+			List<Map<String, Object>> trees) {
+		if (node.getLeaderId() == 0) {
+			Map<String, Object> m = toMap(node);
+			trees.add(m);
+		} else if (node.getLeaderId() > 0) {
+			for (Map<String, Object> p : trees) {
+				if (node.getId() == (Integer) p.get("id")) {
+					continue;
+				}
+				if (node.getLeaderId() == (Integer) p.get("id")) {
+					Map<String, Object> mapNode = this.toMap(node);
+					List<Map<String, Object>> children = new LinkedList<Map<String, Object>>();
+					children.add(mapNode);
+					p.put("children", children);
+				}
+			}
+		}
+	}
+
+	private Map<String, Object> toMap(Permission p) {
+		Map<String, Object> m = new HashMap<String, Object>();
+		m.put("id", p.getId());
+		if (p.getUrl().trim().length() < 1) {
+			// permission.text = permission.name;
+			m.put("text", p.getName());
+		} else {
+			m.put("text",
+					"<a href=\"javascript:esm.common.tab.create('"
+							+ p.getName() + "','" + p.getUrl()
+							+ "');\" title=\"" + p.getDescription() + "\">"
+							+ p.getName() + "</a>");
+		}
+		m.put("state", "closed");
+		return m;
+	}
 }

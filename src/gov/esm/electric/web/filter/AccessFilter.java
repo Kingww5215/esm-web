@@ -1,10 +1,11 @@
 package gov.esm.electric.web.filter;
 
+import gov.esm.assistor.StringAssistor;
 import gov.esm.electric.domain.Permission;
 import gov.esm.electric.web.Constant;
 
 import java.io.IOException;
-import java.util.Map;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.servlet.Filter;
@@ -40,20 +41,24 @@ public class AccessFilter implements Filter {
 			Object user = session.getAttribute("user");
 			if (user == null) {
 				request.getRequestDispatcher("/login.do").forward(req, resp);
+				return;
 			} else {
 				@SuppressWarnings("unchecked")
-				Map<String, Permission> permissions = (Map<String, Permission>) session
+				List<Permission> permissions = (List<Permission>) session
 						.getAttribute(Constant.SESSION_KEY_PERMISSIONS);
 				if (permissions == null || permissions.size() < 1) {
 					request.getRequestDispatcher("/login.do")
 							.forward(req, resp);
 					return;
 				}
-				String path = request.getServletContext().getContextPath();
+				String path = request.getServletPath();
 				logger.info("context path is :" + path);
-				Permission permission = permissions.get(path);
-				if (permission == null) {
+				boolean havePermission = this.hasPermission(path, permissions);
+				if (!havePermission) {
 					logger.info("you not have permission :" + path);
+					request.getRequestDispatcher("/login.do")
+							.forward(req, resp);
+					return;
 				}
 			}
 		} else {
@@ -65,5 +70,22 @@ public class AccessFilter implements Filter {
 	@Override
 	public void destroy() {
 
+	}
+
+	private boolean hasPermission(String uri, List<Permission> permissions) {
+		if (StringAssistor.isBlank(uri)) {
+			return false;
+		}
+		for (Permission p : permissions) {
+			if (p != null) {
+				String url = p.getUrl();
+				if (StringAssistor.isNotBlank(url)) {
+					if (url.equals(uri)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }
