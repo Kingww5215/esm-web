@@ -4,9 +4,8 @@ import gov.esm.assistor.SpringJdbcAssistor;
 import gov.esm.electric.domain.Permission;
 import gov.esm.electric.domain.RolePermissionRelation;
 
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -51,7 +50,7 @@ public class RolePermissionRelationService {
 		entity.setId(holder.getKey().intValue());
 	}
 
-	private static final String sql_getPermissionsByRoleId = "select permission.* from role_permission_relation as relation inner join permission on relation.permissionId=permission.id and relation.roleId=?";
+	private static final String sql_getPermissionsByRoleId = "select * from permission where leaderId < 0 union all select permission.* from role_permission_relation as relation inner join permission on relation.permissionId=permission.id and relation.roleId=?";
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<Permission> getPermissionsByRoleId(int roleId) {
@@ -59,17 +58,15 @@ public class RolePermissionRelationService {
 				PermissionService.rowMapper, roleId);
 	}
 
-	public Map<String,Permission> getPermissions(List<Integer> roleIds) {
-		Map<String, Permission> map = new HashMap<String, Permission>();
+	public List<Permission> getPermissions(List<Integer> roleIds) {
+		List<Permission> lst = new LinkedList<Permission>();
 		if (roleIds != null && roleIds.size() > 0) {
 			for (Integer roleId : roleIds) {
 				List<Permission> permissions = this
 						.getPermissionsByRoleId(roleId);
-				for (Permission permission : permissions) {
-					map.put(permission.getUrl(), permission);
-				}
+				lst.addAll(permissions);
 			}
 		}
-		return map;
+		return lst;
 	}
 }

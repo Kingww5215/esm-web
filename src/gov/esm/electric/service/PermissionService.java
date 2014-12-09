@@ -46,14 +46,14 @@ public class PermissionService {
 				entity.getId());
 	}
 
-	private static final String sql_getPermissions = "select id,name,url,description,leaderId,seq from permission ";
+	private static final String sql_getPermissions = "select id,name,url,description,leaderId,seq from permission where leaderId < 0 ";
 
 	public List<Permission> getPermissions(List<Integer> ids) {
 		if (ids != null && ids.size() > 0) {
 			StringBuilder sql = new StringBuilder(128);
 			sql.append(sql_getPermissions);
 			String in = StringAssistor.join(ids, ",");
-			sql.append(" where id in(").append(in).append(")");
+			sql.append(" or id in(").append(in).append(")");
 			return this.jdbcTemplate.query(sql.toString(), rowMapper, in);
 		} else {
 			return this.jdbcTemplate.query(sql_getPermissions, rowMapper);
