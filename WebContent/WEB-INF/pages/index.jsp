@@ -14,7 +14,6 @@
 <script type="text/javascript">
 	window.onload = function() {
 		//初始化功能菜单
-		esm.index.menu.init();
 	};
 </script>
 </head>
@@ -29,12 +28,8 @@
 	<!-- 左侧功能菜单 开始 -->
 	<div data-options="region:'west',split:true,title:'功能菜单',"
 		style="width: 30%; padding: 10px;">
-		<div class="easyui-panel" data-options="split:true,border:false"
-			style="padding: 5px; width: 100%">
-			<ul id="tree-menu" class="easyui-tree"
-				data-options="animate:true,lines:true">
-
-			</ul>
+		<div class="easyui-panel" style="padding: 5px">
+			<ul id="tt" class="easyui-tree" data-options="url:'/getPermissions.do',method:'get',animate:true"></ul>
 		</div>
 	</div>
 	<!-- 　左侧功能菜单 结束 -->
