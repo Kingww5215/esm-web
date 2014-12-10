@@ -17,7 +17,7 @@ esm.index.menu.init = function() {
 			var trees = [];
 			esm.index.menu.buildTree(permissions, trees);
 			esm.index.menu.sort(trees);
-			console.info(trees);
+			//console.info(trees);
 
 			jQuery("#tt").tree({
 				data : trees
