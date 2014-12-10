@@ -16,6 +16,7 @@ esm.index.menu.init = function() {
 			// console.info(permissions);
 			var trees = [];
 			esm.index.menu.buildTree(permissions, trees);
+			esm.index.menu.sort(trees);
 			console.info(trees);
 
 			jQuery("#tt").tree({
@@ -32,7 +33,6 @@ esm.index.menu.buildTree = function(permissions, trees) {
 		var item = permissions[i];
 		esm.index.menu.build(item, permissions, trees);
 	}
-	esm.index.menu.sort(trees);
 };
 /**
  * 构造左侧菜单树
@@ -62,13 +62,13 @@ esm.index.menu.format = function(permission) {
 	if (permission.url.trim().length < 1) {
 		permission.text = permission.name;
 	} else {
-		permission.text = "<a onclick=\"esm.common.tab.create('"
-				+ permission.name + "','" + permission.url + "');\" title=\""
-				+ permission.description + "\">" + permission.name + "</a>";
-		// permission.text = "<a onclick=\"javascript:esm.common.tab.create('"
+		// permission.text = "<a onclick=\"esm.common.tab.create('"
 		// + permission.name + "','" + permission.url + "');\" title=\""
-		// + permission.description + "\">" +
-		// permission.name+"-(sort:"+permission.seq+")" + "</a>";
+		// + permission.description + "\">" + permission.name + "</a>";
+		permission.text = "<a onclick=\"javascript:esm.common.tab.create('"
+				+ permission.name + "','" + permission.url + "');\" title=\""
+				+ permission.description + "\">" + permission.name + "-(seq:"
+				+ permission.seq + ")" + "</a>";
 	}
 
 	// 去除无用的属性
@@ -82,25 +82,15 @@ esm.index.menu.format = function(permission) {
  */
 esm.index.menu.sort = function(trees) {
 	for (var i = 0; i < trees.length; i++) {
-		if (trees[i].children != null && trees[i].children.length > 0) {
-			esm.index.menu.sort(trees[i].children);
-		}
 		for (var j = i + 1; j < trees.length; j++) {
-			if (trees[i].seq > trees[j].seq) {
+			if (trees[j].seq < trees[i].seq) {
 				var node = trees[i];
 				trees[i] = trees[j];
 				trees[j] = node;
-
-				if (trees[i].children != null) {
-					if (trees[i].children[i].length > 0) {
-						if (trees[i].leader > 0) {
-							trees[i].state = "closed";
-						} else {
-							trees[i].state = "opened";
-						}
-					}
-				}
 			}
+		}
+		if (trees[i].children != null && trees[i].children.length > 0) {
+			esm.index.menu.sort(trees[i].children);
 		}
 	}
 };
