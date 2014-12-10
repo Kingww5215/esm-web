@@ -28,11 +28,8 @@
 
 	<!-- 左侧功能菜单 开始 -->
 	<div data-options="region:'west',split:true,title:'功能菜单',"
-		style="width: 30%; padding: 10px;">
-		<div class="easyui-panel" style="padding: 5px">
-			<ul id="tt" class="easyui-tree"
-				data-options="animate:true"></ul>
-		</div>
+		style="width: 15%; padding: 10px;">
+			<ul id="tt" class="easyui-tree" data-options="animate:true,lines:true"></ul>
 	</div>
 	<!-- 　左侧功能菜单 结束 -->
 
