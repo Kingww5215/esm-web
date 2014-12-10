@@ -18,41 +18,28 @@ esm.index.menu.init = function() {
 			esm.index.menu.buildTree(permissions, trees);
 			console.info(trees);
 
-			var html = new Array();
-			html = esm.index.menu.buildMenuHtml(trees, html);
-
-			jQuery("#tt").html(html)
+			jQuery("#tt").tree({
+				data : trees
+			});
 		}
 	});
 };
-
+/**
+ * 构造左侧菜单
+ */
 esm.index.menu.buildTree = function(permissions, trees) {
 	for (var i = 0; i < permissions.length; i++) {
 		var item = permissions[i];
 		esm.index.menu.build(item, permissions, trees);
 	}
-
+	esm.index.menu.sort(trees);
 };
-esm.index.menu.buildMenuHtml = function(trees, html) {
-	for (var i = 0; i < trees.length; i++) {
-		var tree = trees[i];
-		html.push("<li>");
-
-		if (tree.children != null && tree.children.length > 0) {
-			html.push("<span>" + tree.text + "</span>");
-			html.push("<ul>");
-			esm.index.menu.buildMenuHtml(tree.children, html);
-			html.push("</ul>");
-		} else {
-			html.push(tree.text);
-		}
-		html.push("</li>");
-	}
-	return html;
-}
+/**
+ * 构造左侧菜单树
+ */
 esm.index.menu.build = function(node, permissions, trees) {
 	if (node.leaderId == 0) {
-		esm.index.menu.toTree(node);
+		esm.index.menu.format(node);
 		trees.push(node);
 	} else if (node.leaderId > 0) {
 		for (var j = 0; j < permissions.length; j++) {
@@ -61,26 +48,59 @@ esm.index.menu.build = function(node, permissions, trees) {
 				continue;
 			}
 			if (node.leaderId == item.id) {
-				esm.index.menu.toTree(node);
+				esm.index.menu.format(node);
 				item.children = item.children == null ? [] : item.children;
 				item.children.push(node);
 			}
 		}
 	}
 };
-esm.index.menu.toTree = function(permission) {
+/**
+ * 格式化对象。方便调用jquery-easy-ui构造树所需要的json格式。
+ */
+esm.index.menu.format = function(permission) {
 	if (permission.url.trim().length < 1) {
 		permission.text = permission.name;
 	} else {
-		permission.text = "<a href=\"javascript:esm.common.tab.create('"
+		permission.text = "<a onclick=\"esm.common.tab.create('"
 				+ permission.name + "','" + permission.url + "');\" title=\""
-				+ permission.description + "\">" + permission.name + "</a>"
+				+ permission.description + "\">" + permission.name + "</a>";
+		// permission.text = "<a onclick=\"javascript:esm.common.tab.create('"
+		// + permission.name + "','" + permission.url + "');\" title=\""
+		// + permission.description + "\">" +
+		// permission.name+"-(sort:"+permission.seq+")" + "</a>";
 	}
-	permission.state = "closed";
 
-	delete permission.description;
-	delete permission.leaderId;
-	delete permission.name;
-	delete permission.seq;
-	delete permission.url;
+	// 去除无用的属性
+	var keys = [ "url", "name", "leaderId", "description" ];
+	for (var i = 0; i < keys.length; i++) {
+		delete (permission[keys[i]]);
+	}
+};
+/**
+ * 按照用户定的顺序排序
+ */
+esm.index.menu.sort = function(trees) {
+	for (var i = 0; i < trees.length; i++) {
+		if (trees[i].children != null && trees[i].children.length > 0) {
+			esm.index.menu.sort(trees[i].children);
+		}
+		for (var j = i + 1; j < trees.length; j++) {
+			if (trees[i].seq > trees[j].seq) {
+				var node = trees[i];
+				trees[i] = trees[j];
+				trees[j] = node;
+
+				if (trees[i].children != null) {
+					if (trees[i].children[i].length > 0) {
+						if (trees[i].leader > 0) {
+							trees[i].state = "closed";
+						} else {
+							trees[i].state = "opened";
+						}
+					}
+				}
+			}
+		}
+	}
 };
