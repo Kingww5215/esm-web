@@ -15,5 +15,4 @@ public class Constant {
 	public static final String SESSION_KEY_USER = "user";
 	public static final String SESSION_KEY_ROLES = "roles";
 	public static final String SESSION_KEY_PERMISSIONS = "permissions";
-	public static final String SESSION_KEY_MENU_TREE = "menu_tree";
 }

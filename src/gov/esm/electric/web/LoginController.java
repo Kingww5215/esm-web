@@ -90,14 +90,9 @@ public class LoginController {
 			List<Permission> permissions = rolePermissionRelationService
 					.getPermissions(roleIds);
 
-			List<Map<String, Object>> trees = new LinkedList<Map<String, Object>>();
-			for (Permission p : permissions) {
-				buildTree(p, permissions, trees);
-			}
 			req.getSession().setAttribute(Constant.SESSION_KEY_PERMISSIONS,
 					permissions);
-			req.getSession()
-					.setAttribute(Constant.SESSION_KEY_MENU_TREE, trees);
+
 		}
 		map.put("logined", user != null);
 		return map;
@@ -120,44 +115,8 @@ public class LoginController {
 			HttpServletResponse resp) {
 		HttpSession session = req.getSession();
 		Object permissions = session
-				.getAttribute(Constant.SESSION_KEY_MENU_TREE);
+				.getAttribute(Constant.SESSION_KEY_PERMISSIONS);
 		return permissions;
 	}
 
-	private void buildTree(Permission node, List<Permission> permissions,
-			List<Map<String, Object>> trees) {
-		if (node.getLeaderId() == 0) {
-			Map<String, Object> m = toMap(node);
-			trees.add(m);
-		} else if (node.getLeaderId() > 0) {
-			for (Map<String, Object> p : trees) {
-				if (node.getId() == (Integer) p.get("id")) {
-					continue;
-				}
-				if (node.getLeaderId() == (Integer) p.get("id")) {
-					Map<String, Object> mapNode = this.toMap(node);
-					List<Map<String, Object>> children = new LinkedList<Map<String, Object>>();
-					children.add(mapNode);
-					p.put("children", children);
-				}
-			}
-		}
-	}
-
-	private Map<String, Object> toMap(Permission p) {
-		Map<String, Object> m = new HashMap<String, Object>();
-		m.put("id", p.getId());
-		if (p.getUrl().trim().length() < 1) {
-			// permission.text = permission.name;
-			m.put("text", p.getName());
-		} else {
-			m.put("text",
-					"<a href=\"javascript:esm.common.tab.create('"
-							+ p.getName() + "','" + p.getUrl()
-							+ "');\" title=\"" + p.getDescription() + "\">"
-							+ p.getName() + "</a>");
-		}
-		m.put("state", "closed");
-		return m;
-	}
 }

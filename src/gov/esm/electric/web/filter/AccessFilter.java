@@ -49,16 +49,17 @@ public class AccessFilter implements Filter {
 				if (permissions == null || permissions.size() < 1) {
 					request.getRequestDispatcher("/login.do")
 							.forward(req, resp);
-					return;
-				}
-				String path = request.getServletPath();
-				logger.info("context path is :" + path);
-				boolean havePermission = this.hasPermission(path, permissions);
-				if (!havePermission) {
-					logger.info("you not have permission :" + path);
-					request.getRequestDispatcher("/login.do")
-							.forward(req, resp);
-					return;
+
+				} else {
+					String path = request.getServletPath();
+					logger.info("context path is :" + path);
+					boolean havePermission = this.hasPermission(path,
+							permissions);
+					if (!havePermission) {
+						logger.info("you not have permission :" + path);
+						request.getRequestDispatcher("/login.do").forward(req,
+								resp);
+					}
 				}
 			}
 		} else {
