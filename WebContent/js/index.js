@@ -62,13 +62,13 @@ esm.index.menu.format = function(permission) {
 	if (permission.url.trim().length < 1) {
 		permission.text = permission.name;
 	} else {
-		// permission.text = "<a onclick=\"esm.common.tab.create('"
+		 permission.text = "<a onclick=\"esm.common.tab.create('"
+		 + permission.name + "','" + permission.url + "');\" title=\""
+		 + permission.description + "\">" + permission.name + "</a>";
+		// permission.text = "<a onclick=\"javascript:esm.common.tab.create('"
 		// + permission.name + "','" + permission.url + "');\" title=\""
-		// + permission.description + "\">" + permission.name + "</a>";
-		permission.text = "<a onclick=\"javascript:esm.common.tab.create('"
-				+ permission.name + "','" + permission.url + "');\" title=\""
-				+ permission.description + "\">" + permission.name + "-(seq:"
-				+ permission.seq + ")" + "</a>";
+		// + permission.description + "\">" + permission.name + "-(seq:"
+		// + permission.seq + ")" + "</a>";
 	}
 
 	// 去除无用的属性
