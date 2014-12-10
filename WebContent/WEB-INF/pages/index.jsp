@@ -11,6 +11,7 @@
 <script type="text/javascript" src="/ui/jquery.min.js"></script>
 <script type="text/javascript" src="/ui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
 <script type="text/javascript">
 	window.onload = function() {
 		//初始化功能菜单
@@ -18,7 +19,7 @@
 	};
 </script>
 </head>
-<body class="easyui-layout">
+<body class="easyui-layout" style="background:#666;">
 	<!-- 头部 开始 -->
 	<div data-options="region:'north',border:false,split:true"
 		style="height: 80px; background: #666; padding: 10px">
