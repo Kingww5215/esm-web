@@ -22,27 +22,35 @@
 				<property name="username" value="esm" />
 				<property name="password" value="xueliang" />
 				<property name="removeAbandoned" value="true" />
+				<property name="removeAbandonedTimeout" value="60" />
 				<property name="maxActive" value="128" />
 				<property name="initialSize" value="16" />
 				<property name="maxIdle" value="20" />
 				<property name="minIdle" value="5" />
 				<property name="validationQuery" value="select 1" />
+				<property name="validationInterval" value="30000" />
+				<property name="DbProperties">
+					<props>
+						<prop key="useUnicode">true</prop>
+						<prop key="characterEncoding">UTF-8</prop>
+					</props>
+				</property>
 			</bean>
 		</constructor-arg>
 	</bean>
 
 	<!-- 事务管理器 -->
-	<bean id="transactionManager"
+	<bean id="esmTransactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="esmDataSource" />
 	</bean>
 
 	<!-- spring 注解事务管理器 -->
-	<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:annotation-driven transaction-manager="esmTransactionManager" />
 
 	<!-- 注入 jdbcTemplat -->
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="esmDataSource"></property>
-		<property name="queryTimeout" value="5000"></property>
+		<property name="queryTimeout" value="5"></property>
 	</bean>
 </beans>

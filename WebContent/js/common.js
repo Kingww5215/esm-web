@@ -10,10 +10,11 @@ esm.common.tab.create = function(name, url) {
 	html = "";
 	jQuery.get(url, function(data) {
 		html = data;
-	});
-	jQuery('#workArea').tabs('add', {
-		title : name,
-		content : '<div style="padding:10px">' + html + '</div>',
-		closable : true
+		jQuery('#workArea').tabs('add', {
+			title : name,
+			async : false,
+			content : '<div style="padding:10px">' + html + '</div>',
+			closable : true
+		});
 	});
 };
