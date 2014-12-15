@@ -48,7 +48,7 @@ public class AddressService {
 		return this.jdbcTemplate.queryForObject(sql_getAddress, rowMapper, id);
 	}
 
-	private static final String sql_getAddresses = "select id,name, from address limit ?,?";
+	private static final String sql_getAddresses = "select id,name from address limit ?,?";
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<Address> getAddresses(int index, int size) {
