@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
@@ -34,5 +36,9 @@ public class SpringJdbcAssistor {
 
 	public static KeyHolder getGeneratedKeyHolder() {
 		return new GeneratedKeyHolder();
+	}
+
+	public static <T> RowMapper<T> getRowMapper(Class<T> clazz) {
+		return new BeanPropertyRowMapper<T>(clazz);
 	}
 }
