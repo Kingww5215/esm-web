@@ -2,16 +2,20 @@ package gov.esm.electric.web.settings;
 
 import gov.esm.assistor.StringAssistor;
 import gov.esm.electric.domain.User;
+import gov.esm.electric.service.RoleService;
 import gov.esm.electric.service.UserService;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author XueLiang
@@ -24,14 +28,29 @@ public class UserController {
 	@Resource
 	private UserService userService;
 
-	@RequestMapping(value = "/addUser.do")
-	public String addUser() {
+	@Resource
+	private RoleService roleService;
+
+	@RequestMapping(value = "/addUser.do", method = RequestMethod.GET)
+	public String addUser(HttpServletRequest req) {
 		return "/settings/addUser";
 	}
 
 	@RequestMapping(value = "/addUser.do", method = RequestMethod.POST)
-	public Object addUser(User user) {
+	@ResponseBody
+	public Object addUser(
+			@RequestParam(value = "name", defaultValue = "") String name,
+			@RequestParam(value = "password", defaultValue = "") String password,
+			@RequestParam(value = "email", defaultValue = "") String email,
+			@RequestParam(value = "phone", defaultValue = "") String phone,
+			@RequestParam(value = "realName", defaultValue = "") String realName) {
 		Map<String, Object> map = new HashMap<String, Object>(4);
+		User user = new User();
+		user.setEmail(email);
+		user.setName(name);
+		user.setRealName(realName);
+		user.setPassword(password);
+		user.setPhone(phone);
 		int check = this.checkUser(user);
 		map.put("check", check);
 		if (check > 0) {

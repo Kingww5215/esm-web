@@ -55,6 +55,12 @@ public class RoleService {
 
 	private static final String sql_getRoles = "select id,name from role ";
 
+	/**
+	 * 查询指定id的角色，如果 @param ids 为null则查询所有角色
+	 * 
+	 * @param ids
+	 * @return
+	 */
 	public List<Role> getRoles(List<Integer> ids) {
 		StringBuilder sql = null;
 		if (ids != null && ids.size() > 0) {

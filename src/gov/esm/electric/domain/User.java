@@ -18,6 +18,8 @@ public class User implements Serializable {
 	private String realName;
 
 	private int statusId;
+	
+	private int roleId;
 
 	public User() {
 	}
@@ -76,6 +78,14 @@ public class User implements Serializable {
 
 	public void setStatusId(int statusId) {
 		this.statusId = statusId;
+	}
+
+	public int getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 
 }

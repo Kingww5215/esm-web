@@ -29,7 +29,7 @@ public class UserService {
 	private static final RowMapper<User> rowMapper = new BeanPropertyRowMapper<User>(
 			User.class);
 
-	private static final String sql_insert = "insert into user(name,password,email,phone,realName,statusId)values(?,?,?,?,?,?)";
+	private static final String sql_insert = "insert into user(name,password,email,phone,realName,statusId)values(?,md5(?),?,?,?,?)";
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public void insert(User entity) {
