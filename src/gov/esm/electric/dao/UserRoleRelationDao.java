@@ -10,7 +10,6 @@ import javax.annotation.Resource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -44,9 +43,7 @@ public class UserRoleRelationDao {
 		PreparedStatementCreator creator = SpringJdbcAssistor
 				.getPreparedStatementCreator(sql_insert, entity.getUserId(),
 						entity.getRoleId());
-		KeyHolder holder = SpringJdbcAssistor.getGeneratedKeyHolder();
-		this.jdbcTemplate.update(creator, holder);
-		entity.setId(holder.getKey().intValue());
+		this.jdbcTemplate.update(creator);
 	}
 
 	private static final String sql_delete = "delete from user_role_relation where userId=?";
@@ -66,7 +63,7 @@ public class UserRoleRelationDao {
 	 */
 
 	public List<Role> getRolesByUserId(int userId) {
-		return this.jdbcTemplate.query(sql_getRolesByUserId,
-				RoleDao.rowMapper, userId);
+		return this.jdbcTemplate.query(sql_getRolesByUserId, RoleDao.rowMapper,
+				userId);
 	}
 }

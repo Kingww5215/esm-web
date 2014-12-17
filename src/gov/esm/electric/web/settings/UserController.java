@@ -2,6 +2,7 @@ package gov.esm.electric.web.settings;
 
 import gov.esm.assistor.StringAssistor;
 import gov.esm.electric.domain.User;
+import gov.esm.electric.domain.UserRoleRelation;
 import gov.esm.electric.service.RoleService;
 import gov.esm.electric.service.UserService;
 
@@ -26,10 +27,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "/settings")
 public class UserController {
 	@Resource
-	private UserService userService;
+	private UserService userServiceImpl;
 
 	@Resource
-	private RoleService roleService;
+	private RoleService roleServiceImpl;
 
 	@RequestMapping(value = "/addUser.do", method = RequestMethod.GET)
 	public String addUser(HttpServletRequest req) {
@@ -43,7 +44,8 @@ public class UserController {
 			@RequestParam(value = "password", defaultValue = "") String password,
 			@RequestParam(value = "email", defaultValue = "") String email,
 			@RequestParam(value = "phone", defaultValue = "") String phone,
-			@RequestParam(value = "realName", defaultValue = "") String realName) {
+			@RequestParam(value = "realName", defaultValue = "") String realName,
+			@RequestParam(value = "roleId", defaultValue = "") int roleId) {
 		Map<String, Object> map = new HashMap<String, Object>(4);
 		User user = new User();
 		user.setEmail(email);
@@ -51,10 +53,14 @@ public class UserController {
 		user.setRealName(realName);
 		user.setPassword(password);
 		user.setPhone(phone);
-		int check = this.checkUser(user);
+
+		UserRoleRelation userRoleRelation = new UserRoleRelation();
+		userRoleRelation.setRoleId(roleId);
+
+		int check = this.checkUser(user, userRoleRelation);
 		map.put("check", check);
 		if (check > 0) {
-			userService.insert(user);
+			userServiceImpl.insert(user, userRoleRelation);
 			map.put("success", user.getId() > 0);
 		}
 		return map;
@@ -66,7 +72,7 @@ public class UserController {
 	 * @param user
 	 * @return
 	 */
-	private int checkUser(User user) {
+	private int checkUser(User user, UserRoleRelation userRoleRelation) {
 		if (user == null) {
 			return 0;
 		} else if (StringAssistor.isBlank(user.getName())) {
@@ -81,6 +87,10 @@ public class UserController {
 			return -3;
 		} else if (user.getPhone().length() > 15) {
 			return -30;
+		} else if (userRoleRelation == null) {
+			return -4;
+		} else if (userRoleRelation.getRoleId() < 1) {
+			return -40;
 		} else {
 			return 1;
 		}

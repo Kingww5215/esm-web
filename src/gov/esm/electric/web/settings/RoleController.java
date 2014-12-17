@@ -30,7 +30,7 @@ public class RoleController {
 	private static final Logger logger = Logger.getLogger("web");
 
 	@Resource
-	private RoleService roleService;
+	private RoleService roleServiceImpl;
 
 	/**
 	 * 取出系统中的所有角色
@@ -40,7 +40,7 @@ public class RoleController {
 	@RequestMapping(value = "/roles.do")
 	@ResponseBody
 	public Object roles() {
-		return this.roleService.getRoles(null);
+		return this.roleServiceImpl.getRoles(null);
 	}
 
 	/**
@@ -59,11 +59,11 @@ public class RoleController {
 		try {
 			if (id < 1 && StringAssistor.isNotBlank(name)) {
 				Role entity = new Role(id, name);
-				roleService.insert(entity);
+				roleServiceImpl.insert(entity);
 				map.put("message", "新增角色成功!");
 			} else if (id > 0 && StringAssistor.isNotBlank(name)) {
 				Role entity = new Role(id, name);
-				roleService.update(entity);
+				roleServiceImpl.update(entity);
 				map.put("message", "修修角色成功");
 			} else {
 				map.put("message", "角色名称为空");

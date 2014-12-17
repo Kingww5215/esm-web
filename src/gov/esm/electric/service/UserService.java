@@ -31,10 +31,10 @@ public class UserService {
 		userDao.insert(entity);
 	}
 
-	@Transactional(rollbackFor = { RuntimeException.class })
+	@Transactional
 	public void insert(User user, UserRoleRelation relation) {
 		this.insert(user);
-		relation.setId(user.getId());
+		relation.setUserId(user.getId());
 		userRoleRelationDao.insert(relation);
 	}
 

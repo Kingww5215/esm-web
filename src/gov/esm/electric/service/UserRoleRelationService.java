@@ -46,7 +46,6 @@ public class UserRoleRelationService {
 						entity.getRoleId());
 		KeyHolder holder = SpringJdbcAssistor.getGeneratedKeyHolder();
 		this.jdbcTemplate.update(creator, holder);
-		entity.setId(holder.getKey().intValue());
 	}
 
 	private static final String sql_delete = "delete from user_role_relation where userId=?";
@@ -56,7 +55,7 @@ public class UserRoleRelationService {
 		return this.jdbcTemplate.update(sql_delete, userId);
 	}
 
-	private static final String sql_getRolesByUserId = "select role.* from user_role_relation as r left join role on r.roleId=role.id and r.userId=?";
+	private static final String sql_getRolesByUserId = "select * from role where id in(select roleId from user_role_relation where userId=?)";
 
 	/**
 	 * 根据用户编号得到该用户所属角色
