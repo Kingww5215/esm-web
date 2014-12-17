@@ -5,12 +5,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="/js/settings/addUser.js"></script>
 <title>添加用户</title>
 </head>
 <body>
 	<table id="dg" class="easyui-datagrid" title="新增用户"
 		style="width: 100%; height: 200px;"
-		data-options="singleSelect:true,collapsible:false,onClickRow: onClickRow,toolbar:toolbar">
+		data-options="singleSelect:true,collapsible:false,onClickRow: esm.settings.onClickRow,toolbar:esm.settings.toolbar">
 		<thead>
 			<tr>
 				<th data-options="field:'id',width:80">用户编号</th>
@@ -52,36 +53,4 @@
 	</table>
 </body>
 
-<script type="text/javascript">
-var cussor = 0;
-function onClickRow(index){
-	cussor = index;
-	$('#dg').datagrid('beginEdit', index);
-}
-
-<!-- 设置工具栏 -->
-	var toolbar = [ {
-		text : '保存',
-		iconCls : 'icon-save',
-		handler : function() {
-			$('#dg').datagrid("endEdit",cussor);
-			var rows = jQuery("#dg").datagrid("getRows");
-			console.info(rows[0]);
-			if(rows!=null&&rows.length==1){
-				jQuery.ajax({
-					url:"/settings/addUser.do",
-					type:"post",
-					data:rows[0],
-					success:function(data,status,xhr){
-						if(data.check<0){
-							
-						}else if(data.success){
-							
-						}
-					}
-				});
-			}
-		}
-	} ];
-</script>
 </html>

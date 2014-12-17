@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>包头供电局－ＸＸＸ系统登录</title>
+<title>OOOOO－ＸＸＸ系统登录</title>
 <link rel="stylesheet" type="text/css"
 	href="/ui/themes/black/easyui.css">
 <link rel="stylesheet" type="text/css" href="/ui/themes/icon.css">
@@ -13,7 +13,7 @@
 <script type="text/javascript" src="/js/access-control.js"></script>
 </head>
 <body>
-	<div id="dlg" class="easyui-dialog" title="包头供电局－ＸＸ系统"
+	<div id="dlg" class="easyui-dialog" title="OOOOO －ＸＸ系统"
 		style="width: 400px; height: 200px; padding: 10px;">
 		<table cellpadding="5">
 			<tr>
