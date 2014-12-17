@@ -23,6 +23,7 @@ esm.settings.toolbar = [ {
 				data : rows[0],
 				success : function(data, status, xhr) {
 					var message = "";
+					jQuery("#dg").datagrid("getRows")[0][0]=data.user.id;
 					if (data.check < 0) {
 						message = "数据不合法.错误码:" + data.check
 					} else if (data.success) {
@@ -34,5 +35,11 @@ esm.settings.toolbar = [ {
 				}
 			});
 		}
+	}
+}, {
+	text : '取消',
+	iconCls : 'icon-cancel',
+	handler : function() {
+		jQuery('#dg').datagrid("endEdit", esm.settings.addUser.cussor);
 	}
 } ];
