@@ -53,4 +53,11 @@
 		<property name="dataSource" ref="esmDataSource"></property>
 		<property name="queryTimeout" value="5"></property>
 	</bean>
+
+	<!-- 插入数据利器 -->
+	<bean id="simpleJdbcInsert" class="org.springframework.jdbc.core.simple.SimpleJdbcInsert">
+		<constructor-arg>
+			<ref bean="jdbcTemplate" />
+		</constructor-arg>
+	</bean>
 </beans>
