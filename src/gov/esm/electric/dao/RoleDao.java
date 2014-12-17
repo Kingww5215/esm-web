@@ -14,15 +14,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * 
  * @author XueLiang
  * @date 2014年11月30日
  */
-@Service
-public class RoleService {
+@Component
+public class RoleDao {
 	@Resource
 	private JdbcTemplate jdbcTemplate;
 

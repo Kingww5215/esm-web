@@ -13,7 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,8 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author XueLiang
  * @date 2014年11月27日
  */
-@Service
-public class CableLinePartService {
+@Component
+public class CableLinePartDao {
 	@Resource
 	private JdbcTemplate jdbcTemplate;
 	private static final RowMapper<CableLinePart> rowMapper = new BeanPropertyRowMapper<CableLinePart>(CableLinePart.class);

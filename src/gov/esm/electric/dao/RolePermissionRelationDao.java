@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,8 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author XueLiang
  * @date 2014年11月30日
  */
-@Service
-public class RolePermissionRelationService {
+@Component
+public class RolePermissionRelationDao {
 
 	@Resource
 	private JdbcTemplate jdbcTemplate;
@@ -55,7 +55,7 @@ public class RolePermissionRelationService {
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<Permission> getPermissionsByRoleId(int roleId) {
 		return this.jdbcTemplate.query(sql_getPermissionsByRoleId,
-				PermissionService.rowMapper, roleId);
+				PermissionDao.rowMapper, roleId);
 	}
 
 	public List<Permission> getPermissions(List<Integer> roleIds) {

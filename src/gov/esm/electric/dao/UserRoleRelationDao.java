@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author XueLiang
  * @date 2014年12月2日
  */
-@Service
-public class UserRoleRelationService {
+@Component
+public class UserRoleRelationDao {
 
 	@Resource
 	private JdbcTemplate jdbcTemplate;
@@ -67,6 +67,6 @@ public class UserRoleRelationService {
 
 	public List<Role> getRolesByUserId(int userId) {
 		return this.jdbcTemplate.query(sql_getRolesByUserId,
-				RoleService.rowMapper, userId);
+				RoleDao.rowMapper, userId);
 	}
 }

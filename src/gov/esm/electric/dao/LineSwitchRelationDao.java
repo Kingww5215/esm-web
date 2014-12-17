@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author XueLiang
  * @date 2014年11月29日
  */
-public class LineSwitchRelationService {
+@Component
+public class LineSwitchRelationDao {
 
 	@Resource
 	private JdbcTemplate jdbcTemplate;

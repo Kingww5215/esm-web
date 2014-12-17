@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author XueLiang
  * @date 2014年12月1日
  */
-@Service
-public class StationLineRelationService {
+@Component
+public class StationLineRelationDao {
 
 	@Resource
 	private JdbcTemplate jdbcTemplate;

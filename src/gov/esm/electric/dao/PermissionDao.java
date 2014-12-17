@@ -13,15 +13,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * 
  * @author XueLiang
  * @date 2014年11月30日
  */
-@Service
-public class PermissionService {
+@Component
+public class PermissionDao {
 	@Resource
 	private JdbcTemplate jdbcTemplate;
 	static final RowMapper<Permission> rowMapper = new BeanPropertyRowMapper<Permission>(
